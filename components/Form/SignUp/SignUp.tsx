@@ -1,6 +1,6 @@
 import React from "react"
 import { useFormik } from "formik"
-import { useNavigation } from "@react-navigation/native"
+//import { useNavigation } from "@react-navigation/native"
 
 import { ScrollView, KeyboardAvoidingView, Platform } from "react-native"
 
@@ -18,7 +18,7 @@ const initialValues = {
 }
 
 export default function SignUp() {
-    const navigation = useNavigation()
+    //const navigation = useNavigation()
 
     const onSubmit = (values: any) => {
         // Submit

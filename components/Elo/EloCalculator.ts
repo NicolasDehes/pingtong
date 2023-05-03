@@ -1,3 +1,12 @@
+
+/**
+ * Calcule l'expected score d'un joueur contre un autre.
+ * 
+ * @param self Le classement Elo du joueur dont on veut calculer l'expected score.
+ * @param opponent Le classement Elo du joueur contre lequel on veut calculer l'expected score.
+ * 
+ * @returns L'expected score du joueur dont le classement Elo est spécifié contre le joueur dont le classement Elo est spécifié.
+ */
 function expectedScore(self: number, opponent: number) {
   return 1 / (1 + 10 ** ((opponent - self) / 400));
 }

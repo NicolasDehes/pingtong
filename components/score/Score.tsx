@@ -21,13 +21,13 @@ export default class Score extends Component<Props, State> {
   }
 
   componentDidMount(): void {
-    fetch('BLABALABALBALBA')
-      .then(response => response.json())
-      .then(data => {
-        this.setState({
-          scores: data
-        })
-      })
+    // fetch('BLABALABALBALBA')
+    //   .then(response => response.json())
+    //   .then(data => {
+    //     this.setState({
+    //       scores: data
+    //   })
+    // })
   }
 
   render() {
@@ -36,7 +36,15 @@ export default class Score extends Component<Props, State> {
         <Text style={styles.title}>Scores:</Text>
         <Table borderStyle={styles.tableBorder}>
           <TableWrapper style={styles.wrapper}>
-            <Rows data={this.state.scores.slice(1)} style={styles.row} textStyle={styles.rowText} />
+          {
+            this.state.scores.map((score, index) => (
+              <Row
+                key={index}
+                data={[score.user1, score.score1]}
+                style={styles.row}
+              />
+            ))
+          }
           </TableWrapper>
         </Table>
       </ScrollView>
