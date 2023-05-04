@@ -4,13 +4,13 @@ import NunitoSemiBold from "./assets/Nunito-SemiBold.ttf";
 import { useFonts } from "expo-font";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import { createDrawerNavigator } from "@react-navigation/drawer";
+// import { createDrawerNavigator } from "@react-navigation/drawer";
 import LogIn from "./components/Form/LogIn/LogIn";
 import SignUp from "./components/Form/SignUp/SignUp";
 import { styles } from "./App.styles";
 
 const Stack = createStackNavigator();
-const Drawer = createDrawerNavigator();
+// const Drawer = createDrawerNavigator(); // fait planter l'appli avec expo ne plus utiliser
 
 function HomeScreen({ navigation }) {
   return (
@@ -53,10 +53,10 @@ function DrawerContent({ navigation }) {
 export default function App() {
   return (
     <NavigationContainer>
-      <Drawer.Navigator drawerContent={(props) => <DrawerContent {...props} />}>
+      {/* <Drawer.Navigator drawerContent={(props) => <DrawerContent {...props} />}>
         <Drawer.Screen name="Home" component={HomeScreen} />
         <Drawer.Screen name="Details" component={DetailsScreen} />
-      </Drawer.Navigator>
+      </Drawer.Navigator> */}
     </NavigationContainer>
   );
 }
