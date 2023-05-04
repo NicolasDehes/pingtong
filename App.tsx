@@ -3,14 +3,18 @@ import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import NunitoSemiBold from "./assets/Nunito-SemiBold.ttf";
 import { useFonts } from "expo-font";
 import { NavigationContainer } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
-// import { createDrawerNavigator } from "@react-navigation/drawer";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import LogIn from "./components/Form/LogIn/LogIn";
 import SignUp from "./components/Form/SignUp/SignUp";
 import { styles } from "./App.styles";
 
-const Stack = createStackNavigator();
-// const Drawer = createDrawerNavigator(); // fait planter l'appli avec expo ne plus utiliser
+const Stack = createNativeStackNavigator();
+
+const navTheme = {
+  colors: {
+    background: "transparent",
+  },
+};
 
 function HomeScreen({ navigation }) {
   return (
@@ -52,11 +56,17 @@ function DrawerContent({ navigation }) {
 
 export default function App() {
   return (
-    <NavigationContainer>
-      {/* <Drawer.Navigator drawerContent={(props) => <DrawerContent {...props} />}>
-        <Drawer.Screen name="Home" component={HomeScreen} />
-        <Drawer.Screen name="Details" component={DetailsScreen} />
-      </Drawer.Navigator> */}
+    <NavigationContainer theme={navTheme}>
+      <Stack.Navigator
+        screenOptions={{
+          animation: "slide_from_right",
+          headerShown: false,
+        }}
+        initialRouteName="Home"
+      >
+        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="Login" component={LogIn} />
+      </Stack.Navigator>
     </NavigationContainer>
   );
 }
