@@ -17,8 +17,9 @@
     "@types/react-native-table-component": "^1.2.4",
     "axios": "^1.4.0",
     "expo": "~48.0.15",
+    "expo-linear-gradient": "~12.1.2",
     "expo-status-bar": "~1.4.4",
-    "firebase": "^9.21.0",
+    "firebase": "^9.22.1",
     "formik": "^2.2.9",
     "react": "18.2.0",
     "react-native": "0.71.8",
@@ -27,8 +28,7 @@
     "react-native-screens": "~3.20.0",
     "react-native-table-component": "^1.2.2",
     "react-native-vector-icons": "^9.2.0",
-    "yup": "^1.1.1",
-    "expo-linear-gradient": "~12.1.2"
+    "yup": "^1.1.1"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

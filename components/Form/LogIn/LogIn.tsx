@@ -2,10 +2,11 @@ import React, { useState } from "react"
 import { useFormik } from 'formik'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
-import validationSchema from "./validationSchema"
 
-import { LinearGradient } from 'expo-linear-gradient'
-import { Input, Icon, Button, Text } from "@rneui/themed"
+import validationSchema from './validationSchema';
+
+import { LinearGradient } from 'expo-linear-gradient';
+import { Input, Icon, Button, Text } from '@rneui/themed';
 
 import { ImageBackground, SafeAreaView, ScrollView } from 'react-native'
 
@@ -15,9 +16,9 @@ import { auth } from '../../../firebase'
 import { styles } from "./LogIn.styles"
 
 const initialValues = {
-    email: "",
-    password: "",
-}
+    email: '',
+    password: '',
+};
 
 export default function LogIn(navigation: any) {
     const insets = useSafeAreaInsets()
@@ -38,14 +39,21 @@ export default function LogIn(navigation: any) {
         initialValues,
         validationSchema,
         onSubmit,
-    })
+    });
 
-    const { values, errors, handleChange, handleSubmit, isValid, isSubmitting } = formikLogIn
+    const {
+        values,
+        errors,
+        handleChange,
+        handleSubmit,
+        isValid,
+        isSubmitting,
+    } = formikLogIn;
 
     return (
         <ImageBackground
             style={styles.background}
-            source={require("../../../assets/images/fond-pingpong.png")}
+            source={require('../../../assets/images/fond-pingpong.png')}
             blurRadius={5}
         >
             <SafeAreaView
@@ -53,8 +61,8 @@ export default function LogIn(navigation: any) {
                     flex: 1,
                     marginHorizontal: 20,
                     marginVertical: 20,
-                    backgroundColor: "rgba(255, 255, 255, 0.5)",
-                    shadowColor: "black",
+                    backgroundColor: 'rgba(255, 255, 255, 0.5)',
+                    shadowColor: 'black',
                     shadowOffset: { width: 20, height: 20 },
                     shadowOpacity: 0.5,
                     borderRadius: 10,
@@ -65,8 +73,8 @@ export default function LogIn(navigation: any) {
                 <Text
                     h1
                     h1Style={{
-                        fontFamily: "Nunito-SemiBold",
-                        textAlign: "center",
+                        fontFamily: 'Nunito-SemiBold',
+                        textAlign: 'center',
                     }}
                 >
                     Connexion
@@ -98,15 +106,17 @@ export default function LogIn(navigation: any) {
                         labelStyle={{ fontFamily: "Nunito-Regular", color: "#383F39" }}
                         leftIcon={<Icon name="mail-outline" size={20} />}
                         placeholderTextColor="#383F39"
-                        onChangeText={handleChange("email")}
+                        onChangeText={handleChange('email')}
                         value={values.email}
                         errorMessage={errors.email}
                     />
 
                     <Input
                         placeholder="Entrer votre mot de passe *"
+
                         label="Votre mot de passe *"
                         labelStyle={{ fontFamily: "Nunito-Regular", color: "#383F39" }}
+
                         leftIcon={<Icon name="lock-outline" size={20} />}
                         rightIcon={<Icon
                             name={showPassword ? "visibility-off" : "visibility"}
@@ -114,7 +124,7 @@ export default function LogIn(navigation: any) {
                             onPress={() => setShowPassword(!showPassword)}
                         />}
                         placeholderTextColor="#383F39"
-                        onChangeText={handleChange("password")}
+                        onChangeText={handleChange('password')}
                         value={values.password}
                         errorMessage={errors.password}
                         secureTextEntry={showPassword}
@@ -123,7 +133,12 @@ export default function LogIn(navigation: any) {
 
                 <Button
                     disabled={!isValid || isSubmitting}
-                    disabledTitleStyle={{ fontFamily: "Nunito-Regular", textTransform: "uppercase", fontSize: 16, color: "#383F39" }}
+                    disabledTitleStyle={{
+                        fontFamily: 'Nunito-Regular',
+                        textTransform: 'uppercase',
+                        fontSize: 16,
+                        color: '#383F39',
+                    }}
                     loading={isSubmitting}
                     ViewComponent={LinearGradient}
                     linearGradientProps={{
@@ -131,8 +146,17 @@ export default function LogIn(navigation: any) {
                         start: { x: 0, y: 0 },
                         end: { x: 1, y: 1 },
                     }}
-                    style={{ marginHorizontal: 80, marginVertical: 2, marginTop: 20 }}
-                    titleStyle={{ fontFamily: "Nunito-Regular", textTransform: "uppercase", fontSize: 16, color: "#383F39" }}
+                    style={{
+                        marginHorizontal: 80,
+                        marginVertical: 2,
+                        marginTop: 20,
+                    }}
+                    titleStyle={{
+                        fontFamily: 'Nunito-Regular',
+                        textTransform: 'uppercase',
+                        fontSize: 16,
+                        color: '#383F39',
+                    }}
                     onPress={() => handleSubmit()}
                     title="Se connecter"
                 />
@@ -140,11 +164,15 @@ export default function LogIn(navigation: any) {
                 <Button
                     title="Pas de compte ?"
                     type="clear"
-                    titleStyle={{ fontFamily: "Nunito-Regular", color: "#383F39", textDecorationLine: "underline", fontSize: 18 }}
+                    titleStyle={{
+                        fontFamily: 'Nunito-Regular',
+                        color: '#383F39',
+                        textDecorationLine: 'underline',
+                        fontSize: 18,
+                    }}
                     onPress={() => navigation.navigation.navigate("S'inscrire")}
                 />
             </SafeAreaView>
         </ImageBackground>
-    )
-
+    );
 }
