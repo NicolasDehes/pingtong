@@ -1,13 +1,14 @@
 import React from "react"
 import { useFormik } from "formik"
-//import { useNavigation } from "@react-navigation/native"
 
-import { ScrollView, KeyboardAvoidingView, Platform } from "react-native"
+import { ImageBackground, ScrollView, KeyboardAvoidingView, Platform } from "react-native"
 
 import validationSchema from "./validationSchema"
 
 import { LinearGradient } from 'expo-linear-gradient'
 import { Input, Icon, Button, Text } from "@rneui/themed"
+
+import { styles } from "./SignUp.styles"
 
 const initialValues = {
     pseudo: "",
@@ -18,9 +19,7 @@ const initialValues = {
     passwordConfirmation: "",
 }
 
-export default function SignUp(navigation : any) {
-    //const navigation = useNavigation()
-
+export default function SignUp(navigation: any) {
     const onSubmit = (values: any) => {
         // Submit
         setTimeout(() => {
@@ -37,91 +36,114 @@ export default function SignUp(navigation : any) {
     const { values, errors, handleChange, handleSubmit, isValid, isSubmitting } = formikSignUp
 
     return (
-        <KeyboardAvoidingView
-            enabled style={{ flex: 1 }}
-            behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+        <ImageBackground
+            style={styles.background}
+            source={require("../../../assets/images/fond-pingpong.png")}
+            blurRadius={5}
         >
-            <Text
-                h1
-                h1Style={{
-                    fontFamily: "Nunito-SemiBold",
-                    fontWeight: "700"
+            <KeyboardAvoidingView
+                enabled
+                style={{
+                    flex: 1,
+                    marginHorizontal: 20,
+                    marginVertical: 20,
+                    backgroundColor: "rgba(255, 255, 255, 0.5)",
+                    shadowColor: "black",
+                    shadowOffset: { width: 20, height: 20 },
+                    shadowOpacity: 0.5,
+                    borderRadius: 10,
                 }}
+                behavior={Platform.OS === 'ios' ? 'padding' : undefined}
             >
-                S'inscrire
-            </Text>
+                <Text
+                    h1
+                    h1Style={{
+                        fontFamily: "Nunito-SemiBold",
+                        fontWeight: "700",
+                        textAlign: "center",
+                    }}
+                >
+                    S'inscrire
+                </Text>
 
-            <ScrollView
-                keyboardShouldPersistTaps="handled"
-                contentContainerStyle={{ flex: 1 }}
-            >
-                <Input
-                    placeholder="Entrer un pseudonyme"
-                    leftIcon={<Icon name="person-outline" size={20} />}
-                    onChangeText={handleChange("pseudo")}
-                    value={values.pseudo}
-                    errorMessage={errors.pseudo}
-                />
+                <ScrollView
+                    keyboardShouldPersistTaps="handled"
+                    contentContainerStyle={{ flex: 1 }}
+                    style={{
+                        marginHorizontal: 20,
+                        marginVertical: 20,
+                    }}
+                >
+                    <Input
+                        placeholder="Entrer un pseudonyme *"
+                        leftIcon={<Icon name="person-outline" size={20} />}
+                        onChangeText={handleChange("pseudo")}
+                        value={values.pseudo}
+                        errorMessage={errors.pseudo}
+                    />
 
-                <Input
-                    placeholder="Entrer un nom"
-                    leftIcon={<Icon name="drive-file-rename-outline" size={20} />}
-                    onChangeText={handleChange("lastName")}
-                    value={values.lastName}
-                    errorMessage={errors.lastName}
-                />
+                    <Input
+                        placeholder="Entrer un nom"
+                        leftIcon={<Icon name="drive-file-rename-outline" size={20} />}
+                        onChangeText={handleChange("lastName")}
+                        value={values.lastName}
+                        errorMessage={errors.lastName}
+                    />
 
-                <Input
-                    placeholder="Entrer un prénom"
-                    leftIcon={<Icon name="drive-file-rename-outline" size={20} />}
-                    onChangeText={handleChange("firstName")}
-                    value={values.firstName}
-                    errorMessage={errors.firstName}
-                />
+                    <Input
+                        placeholder="Entrer un prénom"
+                        leftIcon={<Icon name="drive-file-rename-outline" size={20} />}
+                        onChangeText={handleChange("firstName")}
+                        value={values.firstName}
+                        errorMessage={errors.firstName}
+                    />
 
-                <Input
-                    placeholder="Entrer un email"
-                    leftIcon={<Icon name="mail-outline" size={20} />}
-                    onChangeText={handleChange("email")}
-                    value={values.email}
-                    errorMessage={errors.email}
-                />
+                    <Input
+                        placeholder="Entrer un email *"
+                        leftIcon={<Icon name="mail-outline" size={20} />}
+                        onChangeText={handleChange("email")}
+                        value={values.email}
+                        errorMessage={errors.email}
+                    />
 
-                <Input
-                    placeholder="Entrer un mot de passe"
-                    leftIcon={<Icon name="lock-outline" size={20} />}
-                    onChangeText={handleChange("password")}
-                    value={values.password}
-                    errorMessage={errors.password}
-                />
+                    <Input
+                        placeholder="Entrer un mot de passe *"
+                        leftIcon={<Icon name="lock-outline" size={20} />}
+                        onChangeText={handleChange("password")}
+                        value={values.password}
+                        errorMessage={errors.password}
+                    />
 
-                <Input
-                    placeholder="Confirmer le mot de passe"
-                    leftIcon={<Icon name="lock-outline" size={20} />}
-                    onChangeText={handleChange("passwordConfirmation")}
-                    value={values.passwordConfirmation}
-                    errorMessage={errors.passwordConfirmation}
-                />
+                    <Input
+                        placeholder="Confirmer le mot de passe *"
+                        leftIcon={<Icon name="lock-outline" size={20} />}
+                        onChangeText={handleChange("passwordConfirmation")}
+                        value={values.passwordConfirmation}
+                        errorMessage={errors.passwordConfirmation}
+                    />
+
+                    <Button
+                        disabled={!isValid || isSubmitting}
+                        loading={isSubmitting}
+                        ViewComponent={LinearGradient}
+                        linearGradientProps={{
+                            colors: ['#00B09B', '#96C93D'],
+                            start: { x: 0, y: 0.5 },
+                            end: { x: 1, y: 0.5 },
+                        }}
+                        style={{ marginHorizontal: 80, marginVertical: 2 }}
+                        onPress={() => handleSubmit()}
+                        title="S'inscrire"
+                    />
+                </ScrollView>
 
                 <Button
-                    disabled={!isValid || isSubmitting}
-                    loading={isSubmitting}
-                    ViewComponent={LinearGradient}
-                    linearGradientProps={{
-                        colors: ['#00B09B', '#96C93D'],
-                        start: { x: 0, y: 0.5 },
-                        end: { x: 1, y: 0.5 },
-                    }}
-                    onPress={() => handleSubmit()}
-                    title="S'inscrire"
+                    title="Vous avez déjà un compte ?"
+                    type="clear"
+                    titleStyle={{ color: "#383F39", textDecorationLine: "underline", fontSize: 18 }}
+                    onPress={() => navigation.navigation.navigate("Se connecter")}
                 />
-            </ScrollView>
-
-            <Button
-                title="S'inscrire"
-                type="clear"
-                onPress={() => navigation.navigate("Se connecter")}
-            />
-        </KeyboardAvoidingView>
+            </KeyboardAvoidingView>
+        </ImageBackground>
     )
 }
