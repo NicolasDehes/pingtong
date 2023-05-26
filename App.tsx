@@ -1,6 +1,5 @@
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
-import NunitoSemiBold from "./assets/Nunito-SemiBold.ttf";
 import { useFonts } from "expo-font";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -12,6 +11,10 @@ import { Button } from "@rneui/themed"
 
 import LogIn from "./components/Form/LogIn/LogIn";
 import SignUp from "./components/Form/SignUp/SignUp";
+
+import { AppContext, AppContextElement} from "./components/Global/AppProvider";
+import { useState } from "react";
+
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -48,12 +51,19 @@ function DrawerContent({ navigation }) {
 }
 
 export default function App() {
+  const [context, setContext] = useState<AppContextElement>({
+    username : "Toto",
+    userEmail: "Totoo@ping.com",
+    theme    : 'light'
+  });
   return (
-    <NavigationContainer>
-      <Drawer.Navigator drawerContent={(props) => <DrawerContent {...props} />}>
-        <Drawer.Screen name="Se connecter" component={LogInScreen} />
-        <Drawer.Screen name="S'inscrire" component={SignUpScreen} />
-      </Drawer.Navigator>
-    </NavigationContainer>
+    <AppContext.Provider value={context}>
+      <NavigationContainer>
+        <Drawer.Navigator drawerContent={(props) => <DrawerContent {...props} />}>
+          <Drawer.Screen name="Se connecter" component={LogInScreen} />
+          <Drawer.Screen name="S'inscrire" component={SignUpScreen} />
+        </Drawer.Navigator>
+      </NavigationContainer>
+    </AppContext.Provider>
   );
 }
