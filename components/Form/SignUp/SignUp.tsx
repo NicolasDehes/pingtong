@@ -3,6 +3,8 @@ import { useFormik } from "formik"
 
 import { ImageBackground, ScrollView, KeyboardAvoidingView, Platform } from "react-native"
 
+import { useSafeAreaInsets } from "react-native-safe-area-context"
+
 import validationSchema from "./validationSchema"
 
 import { LinearGradient } from 'expo-linear-gradient'
@@ -20,6 +22,8 @@ const initialValues = {
 }
 
 export default function SignUp(navigation: any) {
+    const insets = useSafeAreaInsets()
+
     const onSubmit = (values: any) => {
         // Submit
         setTimeout(() => {
@@ -52,6 +56,8 @@ export default function SignUp(navigation: any) {
                     shadowOffset: { width: 20, height: 20 },
                     shadowOpacity: 0.5,
                     borderRadius: 10,
+                    paddingTop: insets.top,
+                    paddingBottom: insets.bottom,
                 }}
                 behavior={Platform.OS === 'ios' ? 'padding' : undefined}
             >

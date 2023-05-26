@@ -6,6 +6,8 @@ import validationSchema from "./validationSchema"
 import { LinearGradient } from 'expo-linear-gradient'
 import { Input, Icon, Button, Text } from "@rneui/themed"
 
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
+
 import { ImageBackground, KeyboardAvoidingView, ScrollView, Platform } from 'react-native'
 
 import { styles } from "./LogIn.styles"
@@ -16,6 +18,8 @@ const initialValues = {
 }
 
 export default function LogIn(navigation: any) {
+    const insets = useSafeAreaInsets()
+
     const onSubmit = (values: any) => {
         // Submit
     }
@@ -45,6 +49,8 @@ export default function LogIn(navigation: any) {
                     shadowOffset: { width: 20, height: 20 },
                     shadowOpacity: 0.5,
                     borderRadius: 10,
+                    paddingTop: insets.top,
+                    paddingBottom: insets.bottom,
                 }}
                 behavior={Platform.OS === 'ios' ? 'padding' : undefined}
             >
