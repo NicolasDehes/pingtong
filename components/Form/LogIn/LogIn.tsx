@@ -1,23 +1,39 @@
-import React from 'react'
+import React, { useState } from "react"
 import { useFormik } from 'formik'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
-import validationSchema from "./validationSchema"
 
-import { LinearGradient } from 'expo-linear-gradient'
-import { Input, Icon, Button, Text } from "@rneui/themed"
+import validationSchema from './validationSchema';
 
-import { KeyboardAvoidingView, ScrollView, Platform } from 'react-native'
+import { LinearGradient } from 'expo-linear-gradient';
+import { Input, Icon, Button, Text } from '@rneui/themed';
+
+import { ImageBackground, SafeAreaView, ScrollView } from 'react-native'
+
+import { signInWithEmailAndPassword } from 'firebase/auth'
+import { auth } from '../../../firebase'
+
+import { styles } from "./LogIn.styles"
 
 const initialValues = {
-    email: "",
-    password: "",
+    email: '',
+    password: '',
 };
 
+export default function LogIn(navigation: any) {
+    const insets = useSafeAreaInsets()
+    const [showPassword, setShowPassword] = useState<boolean>(true)
+    const [errorMessage, setErrorMessage] = useState<string>("")
 
-export default function LogIn(navigation : any) {
     const onSubmit = (values: any) => {
-        // Submit
-    };
+        signInWithEmailAndPassword(auth, values.email, values.password)
+            .then((value) => {
+                console.log(value);
+            })
+            .catch((error) => {
+                setErrorMessage(error.message)
+            })
+    }
 
     const formikLogIn = useFormik({
         initialValues,
@@ -25,63 +41,138 @@ export default function LogIn(navigation : any) {
         onSubmit,
     });
 
-    const { values, errors, handleChange, handleSubmit, isValid, isSubmitting } = formikLogIn;
+    const {
+        values,
+        errors,
+        handleChange,
+        handleSubmit,
+        isValid,
+        isSubmitting,
+    } = formikLogIn;
 
-    return(
-        <KeyboardAvoidingView 
-            enabled style={{flex: 1}} 
-            behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+    return (
+        <ImageBackground
+            style={styles.background}
+            source={require('../../../assets/images/fond-pingpong.png')}
+            blurRadius={5}
         >
-            <Text 
-                h1 
-                h1Style={{
-                    fontFamily: "Nunito-SemiBold",
-                    fontWeight: "700"
+            <SafeAreaView
+                style={{
+                    flex: 1,
+                    marginHorizontal: 20,
+                    marginVertical: 20,
+                    backgroundColor: 'rgba(255, 255, 255, 0.5)',
+                    shadowColor: 'black',
+                    shadowOffset: { width: 20, height: 20 },
+                    shadowOpacity: 0.5,
+                    borderRadius: 10,
+                    paddingTop: insets.top,
+                    paddingBottom: insets.bottom,
                 }}
             >
-                Se connecter 
-            </Text>
-            
-            <ScrollView
-                keyboardShouldPersistTaps="handled" 
-                contentContainerStyle={{flex: 1}}
-            >
-                <Input
-                    placeholder="Entrer votre email"
-                    leftIcon={<Icon name="mail-outline" size={20} />}
-                    onChangeText={handleChange("email")}
-                    value={values.email}
-                    errorMessage={errors.email}
-                />
-                
-                <Input
-                    placeholder="Entrer votre mot de passe"
-                    leftIcon={<Icon name="lock-outline" size={20} />}
-                    onChangeText={handleChange("password")}
-                    value={values.password}
-                    errorMessage={errors.password}
-                />
+                <Text
+                    h1
+                    h1Style={{
+                        fontFamily: 'Nunito-SemiBold',
+                        textAlign: 'center',
+                    }}
+                >
+                    Connexion
+                </Text>
 
-                <Button 
+                <Text 
+                    style={{ 
+                        textAlign: "center", 
+                        color: "red", 
+                        marginBottom: 20,
+                        fontFamily: "Nunito-Regular",
+                        display: errorMessage != "" ? "flex" : "none",
+                    }}
+                >
+                    {errorMessage}
+                </Text>
+
+                <ScrollView
+                    keyboardShouldPersistTaps="handled"
+                    contentContainerStyle={{ flex: 1 }}
+                    style={{
+                        marginHorizontal: 20,
+                        marginVertical: 20,
+                    }}
+                >
+                    <Input
+                        placeholder="Entrer votre email *"
+                        label="Votre adresse mail *"
+                        labelStyle={{ fontFamily: "Nunito-Regular", color: "#383F39" }}
+                        leftIcon={<Icon name="mail-outline" size={20} />}
+                        placeholderTextColor="#383F39"
+                        onChangeText={handleChange('email')}
+                        value={values.email}
+                        errorMessage={errors.email}
+                    />
+
+                    <Input
+                        placeholder="Entrer votre mot de passe *"
+
+                        label="Votre mot de passe *"
+                        labelStyle={{ fontFamily: "Nunito-Regular", color: "#383F39" }}
+
+                        leftIcon={<Icon name="lock-outline" size={20} />}
+                        rightIcon={<Icon
+                            name={showPassword ? "visibility-off" : "visibility"}
+                            size={20}
+                            onPress={() => setShowPassword(!showPassword)}
+                        />}
+                        placeholderTextColor="#383F39"
+                        onChangeText={handleChange('password')}
+                        value={values.password}
+                        errorMessage={errors.password}
+                        secureTextEntry={showPassword}
+                    />
+                </ScrollView>
+
+                <Button
                     disabled={!isValid || isSubmitting}
+                    disabledTitleStyle={{
+                        fontFamily: 'Nunito-Regular',
+                        textTransform: 'uppercase',
+                        fontSize: 16,
+                        color: '#383F39',
+                    }}
                     loading={isSubmitting}
                     ViewComponent={LinearGradient}
                     linearGradientProps={{
                         colors: ['#00B09B', '#96C93D'],
-                        start: { x: 0, y: 0.5 },
-                        end: { x: 1, y: 0.5 },
+                        start: { x: 0, y: 0 },
+                        end: { x: 1, y: 1 },
+                    }}
+                    style={{
+                        marginHorizontal: 80,
+                        marginVertical: 2,
+                        marginTop: 20,
+                    }}
+                    titleStyle={{
+                        fontFamily: 'Nunito-Regular',
+                        textTransform: 'uppercase',
+                        fontSize: 16,
+                        color: '#383F39',
                     }}
                     onPress={() => handleSubmit()}
-                    title="Se connecter" 
+                    title="Se connecter"
                 />
-            </ScrollView>
 
-            <Button
-                title="S'inscrire"
-                type="clear"
-                onPress={() => navigation.navigate("S'inscrire")}
-            />
-        </KeyboardAvoidingView>
-    )
-    
+                <Button
+                    title="Pas de compte ?"
+                    type="clear"
+                    titleStyle={{
+                        fontFamily: 'Nunito-Regular',
+                        color: '#383F39',
+                        textDecorationLine: 'underline',
+                        fontSize: 18,
+                    }}
+                    onPress={() => navigation.navigation.navigate("S'inscrire")}
+                />
+            </SafeAreaView>
+        </ImageBackground>
+    );
 }
