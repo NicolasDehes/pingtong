@@ -1,71 +1,53 @@
-import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
-// import NunitoSemiBold from "./assets/Nunito-SemiBold.ttf";
-import { useFonts } from "expo-font";
 import { NavigationContainer } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
-import { createDrawerNavigator } from "@react-navigation/drawer";
-import LogIn from "./components/Form/LogIn/LogIn";
-import SignUp from "./components/Form/SignUp/SignUp";
-import Scores from "./components/score/Scores";
-import { styles } from "./App.styles";
+import { DrawerContentScrollView, DrawerItemList, createDrawerNavigator } from "@react-navigation/drawer";
 import 'react-native-gesture-handler';
 
-const Stack = createStackNavigator();
+import LogIn from "./components/Form/LogIn/LogIn";
+import SignUp from "./components/Form/SignUp/SignUp";
+import { styles } from "./App.style";
+
+import { AppContext, AppContextElement} from "./components/Global/AppProvider";
+import { useState } from "react";
+
 const Drawer = createDrawerNavigator();
 
-function HomeScreen({ navigation }) {
+function LogInScreen({ navigation }) {
   return (
-    <View style={styles.container}>
-      <Text>Home Screen</Text>
-      <TouchableOpacity onPress={() => navigation.toggleDrawer()}>
-        <Text>Open Drawer</Text>
-      </TouchableOpacity>
-    </View>
+    <LogIn navigation={navigation} />
   );
 }
 
-function DetailsScreen() {
+function SignUpScreen({ navigation }) {
   return (
-    <View style={styles.container}>
-      <Text>Details Screen</Text>
-    </View>
+    <SignUp navigation={navigation} />
   );
 }
 
-function DrawerContent({ navigation }) {
+function CustomDrawerContent(props) {
   return (
-    <View style={styles.drawerContent}>
-      <TouchableOpacity
-        style={styles.drawerItem}
-        onPress={() => navigation.navigate("Home")}
-      >
-        <Text>Home</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.drawerItem}
-        onPress={() => navigation.navigate("Details")}
-      >
-        <Text>Details</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.drawerItem}
-        onPress={() => navigation.navigate("Scores")}
-      >
-        <Text>Scores</Text>
-      </TouchableOpacity>
-    </View>
+    <DrawerContentScrollView style={styles.drawerContent} {...props}>
+      <DrawerItemList styles={{color: 'red'}} {...props} />
+    </DrawerContentScrollView>
   );
 }
 
 export default function App() {
+  const [context, setContext] = useState<AppContextElement>({
+    username : "Toto",
+    userEmail: "Totoo@ping.com",
+    theme    : 'light'
+  });
   return (
-    <NavigationContainer>
-      <Drawer.Navigator drawerContent={(props) => <DrawerContent {...props} />}>
-        <Drawer.Screen name="Home" component={HomeScreen} />
-        <Drawer.Screen name="Details" component={DetailsScreen} />
-        <Drawer.Screen name="Scores" component={Scores} />
-      </Drawer.Navigator>
-    </NavigationContainer>
+    <AppContext.Provider value={context}>
+      <NavigationContainer>
+        <Drawer.Navigator screenOptions={{
+          drawerItemStyle: styles.drawerItem,
+          drawerLabelStyle: styles.drawerLabel,
+        }} drawerContent={(props) => <CustomDrawerContent {...props} />}>
+          <Drawer.Screen name="Se connecter" component={LogInScreen} />
+          <Drawer.Screen name="S'inscrire" component={SignUpScreen} />
+        </Drawer.Navigator>
+      </NavigationContainer>
+    </AppContext.Provider>
   );
 }
