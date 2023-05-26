@@ -74,7 +74,7 @@ export default function LogIn(navigation: any) {
                     }}
                 >
                     <Input
-                        placeholder="Entrer votre email"
+                        placeholder="Entrer votre email *"
                         leftIcon={<Icon name="mail-outline" size={20} />}
                         onChangeText={handleChange("email")}
                         value={values.email}
@@ -82,7 +82,7 @@ export default function LogIn(navigation: any) {
                     />
 
                     <Input
-                        placeholder="Entrer votre mot de passe"
+                        placeholder="Entrer votre mot de passe *"
                         leftIcon={<Icon name="lock-outline" size={20} />}
                         onChangeText={handleChange("password")}
                         value={values.password}
