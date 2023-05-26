@@ -8,6 +8,7 @@ import { createDrawerNavigator } from "@react-navigation/drawer";
 import LogIn from "./components/Form/LogIn/LogIn";
 import SignUp from "./components/Form/SignUp/SignUp";
 import { styles } from "./App.styles";
+import 'react-native-gesture-handler';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
