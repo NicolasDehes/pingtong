@@ -6,6 +6,7 @@ import { ScrollView, KeyboardAvoidingView, Platform } from "react-native"
 
 import validationSchema from "./validationSchema"
 
+import { LinearGradient } from 'expo-linear-gradient'
 import { Input, Icon, Button, Text } from "@rneui/themed"
 
 const initialValues = {
@@ -17,7 +18,7 @@ const initialValues = {
     passwordConfirmation: "",
 }
 
-export default function SignUp() {
+export default function SignUp(navigation : any) {
     //const navigation = useNavigation()
 
     const onSubmit = (values: any) => {
@@ -36,27 +37,27 @@ export default function SignUp() {
     const { values, errors, handleChange, handleSubmit, isValid, isSubmitting } = formikSignUp
 
     return (
-        <KeyboardAvoidingView 
-            enabled style={{flex: 1}} 
+        <KeyboardAvoidingView
+            enabled style={{ flex: 1 }}
             behavior={Platform.OS === 'ios' ? 'padding' : undefined}
         >
-            <Text 
-                h1 
+            <Text
+                h1
                 h1Style={{
                     fontFamily: "Nunito-SemiBold",
-                    fontWeight: "300"
+                    fontWeight: "700"
                 }}
             >
                 S'inscrire
             </Text>
 
             <ScrollView
-                keyboardShouldPersistTaps="handled" 
-                contentContainerStyle={{flex: 1}}
+                keyboardShouldPersistTaps="handled"
+                contentContainerStyle={{ flex: 1 }}
             >
                 <Input
                     placeholder="Entrer un pseudonyme"
-                    leftIcon={<Icon name="account-outline" size={20} />}
+                    leftIcon={<Icon name="person-outline" size={20} />}
                     onChangeText={handleChange("pseudo")}
                     value={values.pseudo}
                     errorMessage={errors.pseudo}
@@ -64,7 +65,7 @@ export default function SignUp() {
 
                 <Input
                     placeholder="Entrer un nom"
-                    leftIcon={<Icon name="account-outline" size={20} />}
+                    leftIcon={<Icon name="drive-file-rename-outline" size={20} />}
                     onChangeText={handleChange("lastName")}
                     value={values.lastName}
                     errorMessage={errors.lastName}
@@ -72,7 +73,7 @@ export default function SignUp() {
 
                 <Input
                     placeholder="Entrer un prénom"
-                    leftIcon={<Icon name="account-outline" size={20} />}
+                    leftIcon={<Icon name="drive-file-rename-outline" size={20} />}
                     onChangeText={handleChange("firstName")}
                     value={values.firstName}
                     errorMessage={errors.firstName}
@@ -80,7 +81,7 @@ export default function SignUp() {
 
                 <Input
                     placeholder="Entrer un email"
-                    leftIcon={<Icon name="email-outline" size={20} />}
+                    leftIcon={<Icon name="mail-outline" size={20} />}
                     onChangeText={handleChange("email")}
                     value={values.email}
                     errorMessage={errors.email}
@@ -102,13 +103,25 @@ export default function SignUp() {
                     errorMessage={errors.passwordConfirmation}
                 />
 
-                <Button 
+                <Button
                     disabled={!isValid || isSubmitting}
                     loading={isSubmitting}
+                    ViewComponent={LinearGradient}
+                    linearGradientProps={{
+                        colors: ['#00B09B', '#96C93D'],
+                        start: { x: 0, y: 0.5 },
+                        end: { x: 1, y: 0.5 },
+                    }}
                     onPress={() => handleSubmit()}
                     title="S'inscrire"
                 />
             </ScrollView>
+
+            <Button
+                title="S'inscrire"
+                type="clear"
+                onPress={() => navigation.navigate("Se connecter")}
+            />
         </KeyboardAvoidingView>
     )
 }
