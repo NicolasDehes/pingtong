@@ -36,4 +36,10 @@ export default StyleSheet.create({
         textAlign: 'center',
         fontSize: 14,
     },
+    winner: {
+        color: '#0F0',
+    },
+    loser: {
+        color: '#F00',
+    }
 });
