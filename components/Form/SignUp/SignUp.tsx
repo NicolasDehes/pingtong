@@ -11,10 +11,11 @@ import { Input, Icon, Button, Text } from "@rneui/themed"
 
 import { styles } from "./SignUp.styles"
 
+import { auth } from '../../../firebase'
+import { createUserWithEmailAndPassword } from 'firebase/auth'
+
 const initialValues = {
     pseudo: "",
-    lastName: "",
-    firstName: "",
     email: "",
     password: "",
     passwordConfirmation: "",
@@ -24,12 +25,16 @@ export default function SignUp(navigation: any) {
     const insets = useSafeAreaInsets()
     const [showPassword, setShowPassword] = useState<boolean>(true)
     const [showPasswordConfirmation, setShowPasswordConfirmation] = useState<boolean>(true)
+    const [errorMessage, setErrorMessage] = useState<string>("")
 
     const onSubmit = (values: any) => {
-        // Submit
-        setTimeout(() => {
-            //navigation.navigate('')
-        }, 400)
+        createUserWithEmailAndPassword(auth, values.email, values.password)
+            .then((value) => {
+                navigation.navigation.navigate('Se connecter')
+            })
+            .catch((error) => {
+                setErrorMessage(error.message)
+            })
     }
 
     const formikSignUp = useFormik({
@@ -71,12 +76,24 @@ export default function SignUp(navigation: any) {
                     S'inscrire
                 </Text>
 
+                <Text 
+                    style={{ 
+                        textAlign: "center", 
+                        color: "red", 
+                        marginBottom: 20,
+                        fontFamily: "Nunito-Regular",
+                        display: errorMessage != "" ? "flex" : "none",
+                    }}
+                >
+                    {errorMessage}
+                </Text>
+
                 <ScrollView
                     keyboardShouldPersistTaps="handled"
                 >
                     <Input
                         placeholder="Entrer un pseudonyme *"
-                        label="Votre Pseudonyme"
+                        label="Votre pseudonyme *"
                         labelStyle={{ fontFamily: "Nunito-Regular", color: "#383F39" }}
                         leftIcon={<Icon name="person-outline" size={20} />}
                         onChangeText={handleChange("pseudo")}
@@ -86,30 +103,8 @@ export default function SignUp(navigation: any) {
                     />
 
                     <Input
-                        placeholder="Entrer un nom"
-                        label="Votre Nom"
-                        labelStyle={{ fontFamily: "Nunito-Regular", color: "#383F39" }}
-                        leftIcon={<Icon name="drive-file-rename-outline" size={20} />}
-                        onChangeText={handleChange("lastName")}
-                        placeholderTextColor="#383F39"
-                        value={values.lastName}
-                        errorMessage={errors.lastName}
-                    />
-
-                    <Input
-                        placeholder="Entrer un prénom"
-                        label="Votre prénom"
-                        labelStyle={{ fontFamily: "Nunito-Regular", color: "#383F39" }}
-                        leftIcon={<Icon name="drive-file-rename-outline" size={20} />}
-                        onChangeText={handleChange("firstName")}
-                        placeholderTextColor="#383F39"
-                        value={values.firstName}
-                        errorMessage={errors.firstName}
-                    />
-
-                    <Input
                         placeholder="Entrer un email *"
-                        label="Votre adresse mail"
+                        label="Votre adresse mail *"
                         labelStyle={{ fontFamily: "Nunito-Regular", color: "#383F39" }}
                         leftIcon={<Icon name="mail-outline" size={20} />}
                         placeholderTextColor="#383F39"
@@ -120,7 +115,7 @@ export default function SignUp(navigation: any) {
 
                     <Input
                         placeholder="Entrer un mot de passe *"
-                        label="Votre mot de passe"
+                        label="Votre mot de passe *"
                         labelStyle={{ fontFamily: "Nunito-Regular", color: "#383F39" }}
                         leftIcon={<Icon name="lock-outline" size={20} />}
                         rightIcon={<Icon
@@ -137,7 +132,7 @@ export default function SignUp(navigation: any) {
 
                     <Input
                         placeholder="Confirmer le mot de passe *"
-                        label="Confirmation de votre mot de passe"
+                        label="Confirmation de votre mot de passe *"
                         labelStyle={{ fontFamily: "Nunito-Regular", color: "#383F39" }}
                         leftIcon={<Icon name="lock-outline" size={20} />}
                         rightIcon={<Icon
