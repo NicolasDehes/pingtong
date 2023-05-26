@@ -64,7 +64,7 @@ export default function App() {
       <Drawer.Navigator drawerContent={(props) => <DrawerContent {...props} />}>
         <Drawer.Screen name="Home" component={HomeScreen} />
         <Drawer.Screen name="Details" component={DetailsScreen} />
-        {/* <Drawer.Screen name="Scores" component={Scores} /> */}
+        <Drawer.Screen name="Scores" component={Scores} />
       </Drawer.Navigator>
     </NavigationContainer>
   );
