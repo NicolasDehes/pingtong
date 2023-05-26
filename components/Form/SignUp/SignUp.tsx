@@ -85,6 +85,7 @@ export default function SignUp(navigation: any) {
                         leftIcon={<Icon name="person-outline" size={20} />}
                         onChangeText={handleChange("pseudo")}
                         value={values.pseudo}
+                        placeholderTextColor="#383F39"
                         errorMessage={errors.pseudo}
                     />
 
@@ -92,6 +93,7 @@ export default function SignUp(navigation: any) {
                         placeholder="Entrer un nom"
                         leftIcon={<Icon name="drive-file-rename-outline" size={20} />}
                         onChangeText={handleChange("lastName")}
+                        placeholderTextColor="#383F39"
                         value={values.lastName}
                         errorMessage={errors.lastName}
                     />
@@ -100,6 +102,7 @@ export default function SignUp(navigation: any) {
                         placeholder="Entrer un prénom"
                         leftIcon={<Icon name="drive-file-rename-outline" size={20} />}
                         onChangeText={handleChange("firstName")}
+                        placeholderTextColor="#383F39"
                         value={values.firstName}
                         errorMessage={errors.firstName}
                     />
@@ -107,6 +110,7 @@ export default function SignUp(navigation: any) {
                     <Input
                         placeholder="Entrer un email *"
                         leftIcon={<Icon name="mail-outline" size={20} />}
+                        placeholderTextColor="#383F39"
                         onChangeText={handleChange("email")}
                         value={values.email}
                         errorMessage={errors.email}
@@ -115,6 +119,7 @@ export default function SignUp(navigation: any) {
                     <Input
                         placeholder="Entrer un mot de passe *"
                         leftIcon={<Icon name="lock-outline" size={20} />}
+                        placeholderTextColor="#383F39"
                         onChangeText={handleChange("password")}
                         value={values.password}
                         errorMessage={errors.password}
@@ -124,6 +129,7 @@ export default function SignUp(navigation: any) {
                         placeholder="Confirmer le mot de passe *"
                         leftIcon={<Icon name="lock-outline" size={20} />}
                         onChangeText={handleChange("passwordConfirmation")}
+                        placeholderTextColor="#383F39"
                         value={values.passwordConfirmation}
                         errorMessage={errors.passwordConfirmation}
                     />
@@ -138,6 +144,7 @@ export default function SignUp(navigation: any) {
                             end: { x: 1, y: 0.5 },
                         }}
                         style={{ marginHorizontal: 80, marginVertical: 2 }}
+                        titleStyle={{ fontFamily: "Nunito-SemiBold", fontWeight: "500", textTransform: "uppercase", fontSize: 18, color: "#383F39" }}
                         onPress={() => handleSubmit()}
                         title="S'inscrire"
                     />

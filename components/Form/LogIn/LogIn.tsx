@@ -62,7 +62,7 @@ export default function LogIn(navigation: any) {
                         textAlign: "center",
                     }}
                 >
-                    Se connecter
+                    Connexion
                 </Text>
 
                 <ScrollView
@@ -76,6 +76,7 @@ export default function LogIn(navigation: any) {
                     <Input
                         placeholder="Entrer votre email *"
                         leftIcon={<Icon name="mail-outline" size={20} />}
+                        placeholderTextColor="#383F39"
                         onChangeText={handleChange("email")}
                         value={values.email}
                         errorMessage={errors.email}
@@ -84,6 +85,7 @@ export default function LogIn(navigation: any) {
                     <Input
                         placeholder="Entrer votre mot de passe *"
                         leftIcon={<Icon name="lock-outline" size={20} />}
+                        placeholderTextColor="#383F39"
                         onChangeText={handleChange("password")}
                         value={values.password}
                         errorMessage={errors.password}
@@ -99,6 +101,7 @@ export default function LogIn(navigation: any) {
                             end: { x: 1, y: 0.5 },
                         }}
                         style={{ marginHorizontal: 80, marginVertical: 2 }}
+                        titleStyle={{ fontFamily: "Nunito-SemiBold", fontWeight: "500", textTransform: "uppercase", fontSize: 18, color: "#383F39" }}
                         onPress={() => handleSubmit()}
                         title="Se connecter"
                     />
