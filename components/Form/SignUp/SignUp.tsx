@@ -1,11 +1,10 @@
-import React from 'react';
-import { useFormik } from 'formik';
+import React, { useState } from "react"
+import { useFormik } from "formik"
+import { useSafeAreaInsets } from "react-native-safe-area-context"
 
 import { ImageBackground, ScrollView, SafeAreaView } from 'react-native';
 
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
-
-import validationSchema from './validationSchema';
+import validationSchema from "./validationSchema"
 
 import { LinearGradient } from 'expo-linear-gradient';
 import { Input, Icon, Button, Text } from '@rneui/themed';
@@ -14,28 +13,31 @@ import { styles } from './SignUp.styles';
 import { auth } from '../../../firebase';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 
+import { auth } from '../../../firebase'
+import { createUserWithEmailAndPassword } from 'firebase/auth'
+
 const initialValues = {
-    pseudo: '',
-    lastName: '',
-    firstName: '',
-    email: '',
-    password: '',
-    passwordConfirmation: '',
-};
+    pseudo: "",
+    email: "",
+    password: "",
+    passwordConfirmation: "",
+}
 
 export default function SignUp(navigation: any) {
-    const insets = useSafeAreaInsets();
+    const insets = useSafeAreaInsets()
+    const [showPassword, setShowPassword] = useState<boolean>(true)
+    const [showPasswordConfirmation, setShowPasswordConfirmation] = useState<boolean>(true)
+    const [errorMessage, setErrorMessage] = useState<string>("")
 
-    const onSubmit = (values: any) => {     
+    const onSubmit = (values: any) => {
         createUserWithEmailAndPassword(auth, values.email, values.password)
             .then((value) => {
-                console.log(value);
-                // navigation.navigate();
+                navigation.navigation.navigate('Se connecter')
             })
             .catch((error) => {
-                console.log(error);
-            });
-    };
+                setErrorMessage(error.message)
+            })
+    }
 
     const formikSignUp = useFormik({
         initialValues,
@@ -83,14 +85,25 @@ export default function SignUp(navigation: any) {
                     S'inscrire
                 </Text>
 
-                <ScrollView keyboardShouldPersistTaps="handled">
+                <Text 
+                    style={{ 
+                        textAlign: "center", 
+                        color: "red", 
+                        marginBottom: 20,
+                        fontFamily: "Nunito-Regular",
+                        display: errorMessage != "" ? "flex" : "none",
+                    }}
+                >
+                    {errorMessage}
+                </Text>
+
+                <ScrollView
+                    keyboardShouldPersistTaps="handled"
+                >
                     <Input
                         placeholder="Entrer un pseudonyme *"
-                        label="Votre Pseudonyme"
-                        labelStyle={{
-                            fontFamily: 'Nunito-Regular',
-                            color: '#383F39',
-                        }}
+                        label="Votre pseudonyme *"
+                        labelStyle={{ fontFamily: "Nunito-Regular", color: "#383F39" }}
                         leftIcon={<Icon name="person-outline" size={20} />}
                         onChangeText={handleChange('pseudo')}
                         value={values.pseudo}
@@ -99,6 +112,10 @@ export default function SignUp(navigation: any) {
                     />
 
                     <Input
+                        placeholder="Entrer un email *"
+                        label="Votre adresse mail *"
+                        labelStyle={{ fontFamily: "Nunito-Regular", color: "#383F39" }}
+
                         placeholder="Entrer un nom"
                         label="Votre Nom"
                         labelStyle={{
@@ -146,30 +163,36 @@ export default function SignUp(navigation: any) {
 
                     <Input
                         placeholder="Entrer un mot de passe *"
-                        label="Votre mot de passe"
-                        labelStyle={{
-                            fontFamily: 'Nunito-Regular',
-                            color: '#383F39',
-                        }}
+                        label="Votre mot de passe *"
+                        labelStyle={{ fontFamily: "Nunito-Regular", color: "#383F39" }}
                         leftIcon={<Icon name="lock-outline" size={20} />}
+                        rightIcon={<Icon
+                            name={showPassword ? "visibility-off" : "visibility"}
+                            size={20}
+                            onPress={() => setShowPassword(!showPassword)}
+                        />}
                         placeholderTextColor="#383F39"
                         onChangeText={handleChange('password')}
                         value={values.password}
                         errorMessage={errors.password}
+                        secureTextEntry={showPassword}
                     />
 
                     <Input
                         placeholder="Confirmer le mot de passe *"
-                        label="Confirmation de votre mot de passe"
-                        labelStyle={{
-                            fontFamily: 'Nunito-Regular',
-                            color: '#383F39',
-                        }}
+                        label="Confirmation de votre mot de passe *"
+                        labelStyle={{ fontFamily: "Nunito-Regular", color: "#383F39" }}
                         leftIcon={<Icon name="lock-outline" size={20} />}
-                        onChangeText={handleChange('passwordConfirmation')}
+                        rightIcon={<Icon
+                            name={showPasswordConfirmation ? "visibility-off" : "visibility"}
+                            size={20}
+                            onPress={() => setShowPasswordConfirmation(!showPasswordConfirmation)}
+                        />}
+                        onChangeText={handleChange("passwordConfirmation")}
                         placeholderTextColor="#383F39"
                         value={values.passwordConfirmation}
                         errorMessage={errors.passwordConfirmation}
+                        secureTextEntry={showPasswordConfirmation}
                     />
                 </ScrollView>
 

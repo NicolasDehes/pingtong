@@ -1,18 +1,19 @@
-import React from 'react';
-import { useFormik } from 'formik';
+import React, { useState } from "react"
+import { useFormik } from 'formik'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
+
 
 import validationSchema from './validationSchema';
 
 import { LinearGradient } from 'expo-linear-gradient';
 import { Input, Icon, Button, Text } from '@rneui/themed';
 
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { ImageBackground, SafeAreaView, ScrollView } from 'react-native'
 
-import { ImageBackground, SafeAreaView, ScrollView } from 'react-native';
+import { signInWithEmailAndPassword } from 'firebase/auth'
+import { auth } from '../../../firebase'
 
-import { styles } from './LogIn.styles';
-import { signInWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../../../firebase';
+import { styles } from "./LogIn.styles"
 
 const initialValues = {
     email: '',
@@ -20,19 +21,19 @@ const initialValues = {
 };
 
 export default function LogIn(navigation: any) {
-    const insets = useSafeAreaInsets();
+    const insets = useSafeAreaInsets()
+    const [showPassword, setShowPassword] = useState<boolean>(true)
+    const [errorMessage, setErrorMessage] = useState<string>("")
 
     const onSubmit = (values: any) => {
-        console.log(values);
         signInWithEmailAndPassword(auth, values.email, values.password)
             .then((value) => {
                 console.log(value);
-                // navigation.navigation.navigate();
             })
             .catch((error) => {
-                console.log(error);
-            });
-    };
+                setErrorMessage(error.message)
+            })
+    }
 
     const formikLogIn = useFormik({
         initialValues,
@@ -79,6 +80,18 @@ export default function LogIn(navigation: any) {
                     Connexion
                 </Text>
 
+                <Text 
+                    style={{ 
+                        textAlign: "center", 
+                        color: "red", 
+                        marginBottom: 20,
+                        fontFamily: "Nunito-Regular",
+                        display: errorMessage != "" ? "flex" : "none",
+                    }}
+                >
+                    {errorMessage}
+                </Text>
+
                 <ScrollView
                     keyboardShouldPersistTaps="handled"
                     contentContainerStyle={{ flex: 1 }}
@@ -89,11 +102,8 @@ export default function LogIn(navigation: any) {
                 >
                     <Input
                         placeholder="Entrer votre email *"
-                        label="Votre adresse mail"
-                        labelStyle={{
-                            fontFamily: 'Nunito-Regular',
-                            color: '#383F39',
-                        }}
+                        label="Votre adresse mail *"
+                        labelStyle={{ fontFamily: "Nunito-Regular", color: "#383F39" }}
                         leftIcon={<Icon name="mail-outline" size={20} />}
                         placeholderTextColor="#383F39"
                         onChangeText={handleChange('email')}
@@ -103,16 +113,21 @@ export default function LogIn(navigation: any) {
 
                     <Input
                         placeholder="Entrer votre mot de passe *"
-                        label="Votre mot de passe"
-                        labelStyle={{
-                            fontFamily: 'Nunito-Regular',
-                            color: '#383F39',
-                        }}
+
+                        label="Votre mot de passe *"
+                        labelStyle={{ fontFamily: "Nunito-Regular", color: "#383F39" }}
+
                         leftIcon={<Icon name="lock-outline" size={20} />}
+                        rightIcon={<Icon
+                            name={showPassword ? "visibility-off" : "visibility"}
+                            size={20}
+                            onPress={() => setShowPassword(!showPassword)}
+                        />}
                         placeholderTextColor="#383F39"
                         onChangeText={handleChange('password')}
                         value={values.password}
                         errorMessage={errors.password}
+                        secureTextEntry={showPassword}
                     />
                 </ScrollView>
 
