@@ -9,9 +9,7 @@ import validationSchema from "./validationSchema"
 import { LinearGradient } from 'expo-linear-gradient';
 import { Input, Icon, Button, Text } from '@rneui/themed';
 
-import { styles } from './SignUp.styles';
-import { auth } from '../../../firebase';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { styles } from './SignUp.styles'
 
 import { auth } from '../../../firebase'
 import { createUserWithEmailAndPassword } from 'firebase/auth'
@@ -114,42 +112,6 @@ export default function SignUp(navigation: any) {
                     <Input
                         placeholder="Entrer un email *"
                         label="Votre adresse mail *"
-                        labelStyle={{ fontFamily: "Nunito-Regular", color: "#383F39" }}
-
-                        placeholder="Entrer un nom"
-                        label="Votre Nom"
-                        labelStyle={{
-                            fontFamily: 'Nunito-Regular',
-                            color: '#383F39',
-                        }}
-                        leftIcon={
-                            <Icon name="drive-file-rename-outline" size={20} />
-                        }
-                        onChangeText={handleChange('lastName')}
-                        placeholderTextColor="#383F39"
-                        value={values.lastName}
-                        errorMessage={errors.lastName}
-                    />
-
-                    <Input
-                        placeholder="Entrer un prénom"
-                        label="Votre prénom"
-                        labelStyle={{
-                            fontFamily: 'Nunito-Regular',
-                            color: '#383F39',
-                        }}
-                        leftIcon={
-                            <Icon name="drive-file-rename-outline" size={20} />
-                        }
-                        onChangeText={handleChange('firstName')}
-                        placeholderTextColor="#383F39"
-                        value={values.firstName}
-                        errorMessage={errors.firstName}
-                    />
-
-                    <Input
-                        placeholder="Entrer un email *"
-                        label="Votre adresse mail"
                         labelStyle={{
                             fontFamily: 'Nunito-Regular',
                             color: '#383F39',
