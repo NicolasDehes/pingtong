@@ -42,7 +42,10 @@ export default function App() {
   return (
     <AppContext.Provider value={context}>
       <NavigationContainer>
-        <Drawer.Navigator drawerContent={(props) => <DrawerContent {...props} />}>
+        <Drawer.Navigator screenOptions={{
+          drawerItemStyle: styles.drawerItem,
+          drawerLabelStyle: styles.drawerLabel,
+        }} drawerContent={(props) => <CustomDrawerContent {...props} />}>
           <Drawer.Screen name="Se connecter" component={LogInScreen} />
           <Drawer.Screen name="S'inscrire" component={SignUpScreen} />
         </Drawer.Navigator>
