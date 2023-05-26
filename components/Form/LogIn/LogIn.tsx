@@ -8,7 +8,7 @@ import { Input, Icon, Button, Text } from "@rneui/themed"
 
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
-import { ImageBackground, KeyboardAvoidingView, ScrollView, Platform } from 'react-native'
+import { ImageBackground, SafeAreaView, ScrollView } from 'react-native'
 
 import { styles } from "./LogIn.styles"
 
@@ -38,8 +38,7 @@ export default function LogIn(navigation: any) {
             source={require("../../../assets/images/fond-pingpong.png")}
             blurRadius={5}
         >
-            <KeyboardAvoidingView
-                enabled
+            <SafeAreaView
                 style={{
                     flex: 1,
                     marginHorizontal: 20,
@@ -52,13 +51,11 @@ export default function LogIn(navigation: any) {
                     paddingTop: insets.top,
                     paddingBottom: insets.bottom,
                 }}
-                behavior={Platform.OS === 'ios' ? 'padding' : undefined}
             >
                 <Text
                     h1
                     h1Style={{
                         fontFamily: "Nunito-SemiBold",
-                        fontWeight: "700",
                         textAlign: "center",
                     }}
                 >
@@ -75,6 +72,8 @@ export default function LogIn(navigation: any) {
                 >
                     <Input
                         placeholder="Entrer votre email *"
+                        label="Votre adresse mail"
+                        labelStyle={{ fontFamily: "Nunito-Regular", color: "#383F39" }}
                         leftIcon={<Icon name="mail-outline" size={20} />}
                         placeholderTextColor="#383F39"
                         onChangeText={handleChange("email")}
@@ -84,36 +83,39 @@ export default function LogIn(navigation: any) {
 
                     <Input
                         placeholder="Entrer votre mot de passe *"
+                        label="Votre mot de passe"
+                        labelStyle={{ fontFamily: "Nunito-Regular", color: "#383F39" }}
                         leftIcon={<Icon name="lock-outline" size={20} />}
                         placeholderTextColor="#383F39"
                         onChangeText={handleChange("password")}
                         value={values.password}
                         errorMessage={errors.password}
                     />
-
-                    <Button
-                        disabled={!isValid || isSubmitting}
-                        loading={isSubmitting}
-                        ViewComponent={LinearGradient}
-                        linearGradientProps={{
-                            colors: ['#00B09B', '#96C93D'],
-                            start: { x: 0, y: 0.5 },
-                            end: { x: 1, y: 0.5 },
-                        }}
-                        style={{ marginHorizontal: 80, marginVertical: 2 }}
-                        titleStyle={{ fontFamily: "Nunito-SemiBold", fontWeight: "500", textTransform: "uppercase", fontSize: 18, color: "#383F39" }}
-                        onPress={() => handleSubmit()}
-                        title="Se connecter"
-                    />
                 </ScrollView>
+
+                <Button
+                    disabled={!isValid || isSubmitting}
+                    disabledTitleStyle={{ fontFamily: "Nunito-Regular", textTransform: "uppercase", fontSize: 16, color: "#383F39" }}
+                    loading={isSubmitting}
+                    ViewComponent={LinearGradient}
+                    linearGradientProps={{
+                        colors: ['#00B09B', '#96C93D'],
+                        start: { x: 0, y: 0 },
+                        end: { x: 1, y: 1 },
+                    }}
+                    style={{ marginHorizontal: 80, marginVertical: 2, marginTop: 20 }}
+                    titleStyle={{ fontFamily: "Nunito-Regular", textTransform: "uppercase", fontSize: 16, color: "#383F39" }}
+                    onPress={() => handleSubmit()}
+                    title="Se connecter"
+                />
 
                 <Button
                     title="Pas de compte ?"
                     type="clear"
-                    titleStyle={{ color: "#383F39", textDecorationLine: "underline", fontSize: 18 }}
+                    titleStyle={{ fontFamily: "Nunito-Regular", color: "#383F39", textDecorationLine: "underline", fontSize: 18 }}
                     onPress={() => navigation.navigation.navigate("S'inscrire")}
                 />
-            </KeyboardAvoidingView>
+            </SafeAreaView>
         </ImageBackground>
     )
 

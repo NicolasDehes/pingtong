@@ -1,7 +1,7 @@
 import React from "react"
 import { useFormik } from "formik"
 
-import { ImageBackground, ScrollView, KeyboardAvoidingView, Platform } from "react-native"
+import { ImageBackground, ScrollView, SafeAreaView } from "react-native"
 
 import { useSafeAreaInsets } from "react-native-safe-area-context"
 
@@ -45,8 +45,7 @@ export default function SignUp(navigation: any) {
             source={require("../../../assets/images/fond-pingpong.png")}
             blurRadius={5}
         >
-            <KeyboardAvoidingView
-                enabled
+            <SafeAreaView
                 style={{
                     flex: 1,
                     marginHorizontal: 20,
@@ -59,14 +58,13 @@ export default function SignUp(navigation: any) {
                     paddingTop: insets.top,
                     paddingBottom: insets.bottom,
                 }}
-                behavior={Platform.OS === 'ios' ? 'padding' : undefined}
             >
                 <Text
                     h1
                     h1Style={{
                         fontFamily: "Nunito-SemiBold",
-                        fontWeight: "700",
                         textAlign: "center",
+                        marginBottom: 20,
                     }}
                 >
                     S'inscrire
@@ -74,14 +72,11 @@ export default function SignUp(navigation: any) {
 
                 <ScrollView
                     keyboardShouldPersistTaps="handled"
-                    contentContainerStyle={{ flex: 1 }}
-                    style={{
-                        marginHorizontal: 20,
-                        marginVertical: 20,
-                    }}
                 >
                     <Input
                         placeholder="Entrer un pseudonyme *"
+                        label="Votre Pseudonyme"
+                        labelStyle={{ fontFamily: "Nunito-Regular", color: "#383F39" }}
                         leftIcon={<Icon name="person-outline" size={20} />}
                         onChangeText={handleChange("pseudo")}
                         value={values.pseudo}
@@ -91,6 +86,8 @@ export default function SignUp(navigation: any) {
 
                     <Input
                         placeholder="Entrer un nom"
+                        label="Votre Nom"
+                        labelStyle={{ fontFamily: "Nunito-Regular", color: "#383F39" }}
                         leftIcon={<Icon name="drive-file-rename-outline" size={20} />}
                         onChangeText={handleChange("lastName")}
                         placeholderTextColor="#383F39"
@@ -100,6 +97,8 @@ export default function SignUp(navigation: any) {
 
                     <Input
                         placeholder="Entrer un prénom"
+                        label="Votre prénom"
+                        labelStyle={{ fontFamily: "Nunito-Regular", color: "#383F39" }}
                         leftIcon={<Icon name="drive-file-rename-outline" size={20} />}
                         onChangeText={handleChange("firstName")}
                         placeholderTextColor="#383F39"
@@ -109,6 +108,8 @@ export default function SignUp(navigation: any) {
 
                     <Input
                         placeholder="Entrer un email *"
+                        label="Votre adresse mail"
+                        labelStyle={{ fontFamily: "Nunito-Regular", color: "#383F39" }}
                         leftIcon={<Icon name="mail-outline" size={20} />}
                         placeholderTextColor="#383F39"
                         onChangeText={handleChange("email")}
@@ -118,6 +119,8 @@ export default function SignUp(navigation: any) {
 
                     <Input
                         placeholder="Entrer un mot de passe *"
+                        label="Votre mot de passe"
+                        labelStyle={{ fontFamily: "Nunito-Regular", color: "#383F39" }}
                         leftIcon={<Icon name="lock-outline" size={20} />}
                         placeholderTextColor="#383F39"
                         onChangeText={handleChange("password")}
@@ -127,36 +130,39 @@ export default function SignUp(navigation: any) {
 
                     <Input
                         placeholder="Confirmer le mot de passe *"
+                        label="Confirmation de votre mot de passe"
+                        labelStyle={{ fontFamily: "Nunito-Regular", color: "#383F39" }}
                         leftIcon={<Icon name="lock-outline" size={20} />}
                         onChangeText={handleChange("passwordConfirmation")}
                         placeholderTextColor="#383F39"
                         value={values.passwordConfirmation}
                         errorMessage={errors.passwordConfirmation}
                     />
-
-                    <Button
-                        disabled={!isValid || isSubmitting}
-                        loading={isSubmitting}
-                        ViewComponent={LinearGradient}
-                        linearGradientProps={{
-                            colors: ['#00B09B', '#96C93D'],
-                            start: { x: 0, y: 0.5 },
-                            end: { x: 1, y: 0.5 },
-                        }}
-                        style={{ marginHorizontal: 80, marginVertical: 2 }}
-                        titleStyle={{ fontFamily: "Nunito-SemiBold", fontWeight: "500", textTransform: "uppercase", fontSize: 18, color: "#383F39" }}
-                        onPress={() => handleSubmit()}
-                        title="S'inscrire"
-                    />
                 </ScrollView>
+
+                <Button
+                    disabled={!isValid || isSubmitting}
+                    disabledTitleStyle={{ fontFamily: "Nunito-Regular", textTransform: "uppercase", fontSize: 16, color: "#383F39" }}
+                    loading={isSubmitting}
+                    ViewComponent={LinearGradient}
+                    linearGradientProps={{
+                        colors: ['#00B09B', '#96C93D'],
+                        start: { x: 0, y: 0 },
+                        end: { x: 1, y: 1 },
+                    }}
+                    style={{ marginHorizontal: 80, marginVertical: 2, marginTop: 20 }}
+                    titleStyle={{ fontFamily: "Nunito-Regular", textTransform: "uppercase", fontSize: 16, color: "#383F39" }}
+                    onPress={() => handleSubmit()}
+                    title="S'inscrire"
+                />
 
                 <Button
                     title="Vous avez déjà un compte ?"
                     type="clear"
-                    titleStyle={{ color: "#383F39", textDecorationLine: "underline", fontSize: 18 }}
+                    titleStyle={{ fontFamily: "Nunito-Regular", color: "#383F39", textDecorationLine: "underline", fontSize: 18 }}
                     onPress={() => navigation.navigation.navigate("Se connecter")}
                 />
-            </KeyboardAvoidingView>
+            </SafeAreaView>
         </ImageBackground>
     )
 }
