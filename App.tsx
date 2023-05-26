@@ -8,25 +8,23 @@ import { createDrawerNavigator } from "@react-navigation/drawer";
 import { styles } from "./App.styles";
 import 'react-native-gesture-handler';
 
+import { Button } from "@rneui/themed"
+
+import LogIn from "./components/Form/LogIn/LogIn";
+import SignUp from "./components/Form/SignUp/SignUp";
+
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 
-function HomeScreen({ navigation }) {
+function LogInScreen({ navigation }) {
   return (
-    <View style={styles.container}>
-      <Text>Home Screen</Text>
-      <TouchableOpacity onPress={() => navigation.toggleDrawer()}>
-        <Text>Open Drawer</Text>
-      </TouchableOpacity>
-    </View>
+    <LogIn navigation={navigation} />
   );
 }
 
-function DetailsScreen() {
+function SignUpScreen({ navigation }) {
   return (
-    <View style={styles.container}>
-      <Text>Details Screen</Text>
-    </View>
+    <SignUp navigation={navigation} />
   );
 }
 
@@ -35,15 +33,15 @@ function DrawerContent({ navigation }) {
     <View style={styles.drawerContent}>
       <TouchableOpacity
         style={styles.drawerItem}
-        onPress={() => navigation.navigate("Home")}
+        onPress={() => navigation.navigate("Se connecter")}
       >
-        <Text>Home</Text>
+        <Text>Se connecter</Text>
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.drawerItem}
-        onPress={() => navigation.navigate("Details")}
+        onPress={() => navigation.navigate("S'inscrire")}
       >
-        <Text>Details</Text>
+        <Text>S'inscrire</Text>
       </TouchableOpacity>
     </View>
   );
@@ -53,8 +51,8 @@ export default function App() {
   return (
     <NavigationContainer>
       <Drawer.Navigator drawerContent={(props) => <DrawerContent {...props} />}>
-        <Drawer.Screen name="Home" component={HomeScreen} />
-        <Drawer.Screen name="Details" component={DetailsScreen} />
+        <Drawer.Screen name="Se connecter" component={LogInScreen} />
+        <Drawer.Screen name="S'inscrire" component={SignUpScreen} />
       </Drawer.Navigator>
     </NavigationContainer>
   );
