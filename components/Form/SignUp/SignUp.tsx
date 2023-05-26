@@ -1,9 +1,8 @@
-import React from "react"
+import React, { useState } from "react"
 import { useFormik } from "formik"
+import { useSafeAreaInsets } from "react-native-safe-area-context"
 
 import { ImageBackground, ScrollView, SafeAreaView } from "react-native"
-
-import { useSafeAreaInsets } from "react-native-safe-area-context"
 
 import validationSchema from "./validationSchema"
 
@@ -23,6 +22,8 @@ const initialValues = {
 
 export default function SignUp(navigation: any) {
     const insets = useSafeAreaInsets()
+    const [showPassword, setShowPassword] = useState<boolean>(true)
+    const [showPasswordConfirmation, setShowPasswordConfirmation] = useState<boolean>(true)
 
     const onSubmit = (values: any) => {
         // Submit
@@ -122,10 +123,16 @@ export default function SignUp(navigation: any) {
                         label="Votre mot de passe"
                         labelStyle={{ fontFamily: "Nunito-Regular", color: "#383F39" }}
                         leftIcon={<Icon name="lock-outline" size={20} />}
+                        rightIcon={<Icon
+                            name={showPassword ? "visibility-off" : "visibility"}
+                            size={20}
+                            onPress={() => setShowPassword(!showPassword)}
+                        />}
                         placeholderTextColor="#383F39"
                         onChangeText={handleChange("password")}
                         value={values.password}
                         errorMessage={errors.password}
+                        secureTextEntry={showPassword}
                     />
 
                     <Input
@@ -133,10 +140,16 @@ export default function SignUp(navigation: any) {
                         label="Confirmation de votre mot de passe"
                         labelStyle={{ fontFamily: "Nunito-Regular", color: "#383F39" }}
                         leftIcon={<Icon name="lock-outline" size={20} />}
+                        rightIcon={<Icon
+                            name={showPasswordConfirmation ? "visibility-off" : "visibility"}
+                            size={20}
+                            onPress={() => setShowPasswordConfirmation(!showPasswordConfirmation)}
+                        />}
                         onChangeText={handleChange("passwordConfirmation")}
                         placeholderTextColor="#383F39"
                         value={values.passwordConfirmation}
                         errorMessage={errors.passwordConfirmation}
+                        secureTextEntry={showPasswordConfirmation}
                     />
                 </ScrollView>
 

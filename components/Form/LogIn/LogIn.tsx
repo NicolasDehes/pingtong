@@ -1,12 +1,11 @@
-import React from 'react'
+import React, { useState } from "react"
 import { useFormik } from 'formik'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 import validationSchema from "./validationSchema"
 
 import { LinearGradient } from 'expo-linear-gradient'
 import { Input, Icon, Button, Text } from "@rneui/themed"
-
-import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 import { ImageBackground, SafeAreaView, ScrollView } from 'react-native'
 
@@ -19,6 +18,7 @@ const initialValues = {
 
 export default function LogIn(navigation: any) {
     const insets = useSafeAreaInsets()
+    const [showPassword, setShowPassword] = useState<boolean>(true)
 
     const onSubmit = (values: any) => {
         // Submit
@@ -86,10 +86,16 @@ export default function LogIn(navigation: any) {
                         label="Votre mot de passe"
                         labelStyle={{ fontFamily: "Nunito-Regular", color: "#383F39" }}
                         leftIcon={<Icon name="lock-outline" size={20} />}
+                        rightIcon={<Icon
+                            name={showPassword ? "visibility-off" : "visibility"}
+                            size={20}
+                            onPress={() => setShowPassword(!showPassword)}
+                        />}
                         placeholderTextColor="#383F39"
                         onChangeText={handleChange("password")}
                         value={values.password}
                         errorMessage={errors.password}
+                        secureTextEntry={showPassword}
                     />
                 </ScrollView>
 
