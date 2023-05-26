@@ -60,7 +60,7 @@ export default class Scores extends Component<Props, State> {
               key={index}
               style={styles.row}
             >
-              <Text>
+              <Text style={{flex: 1}}>
                 {typeof user1 == 'object'? 
                   user1.name
                 :
@@ -70,10 +70,11 @@ export default class Scores extends Component<Props, State> {
               <Text  style={(score1>score2)? styles.winner : styles.loser}>
                 {score1.toString()}
               </Text>
+              <Text style={{flex:1}}>|</Text>
               <Text style={(score2>score1)? styles.winner : styles.loser}>
                 {score2.toString()}
               </Text>
-              <Text>
+              <Text style={{flex: 1}}>
                 {typeof user2 == 'object'? 
                   user2.name
                 :

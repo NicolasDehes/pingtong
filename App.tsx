@@ -8,6 +8,7 @@ import { styles } from "./App.style";
 
 import { AppContext, AppContextElement} from "./components/Global/AppProvider";
 import { useState } from "react";
+import Scores from "./components/score/Scores";
 
 const Drawer = createDrawerNavigator();
 
@@ -46,6 +47,7 @@ export default function App() {
         }} drawerContent={(props) => <CustomDrawerContent {...props} />}>
           <Drawer.Screen name="Se connecter" component={LogInScreen} />
           <Drawer.Screen name="S'inscrire" component={SignUpScreen} />
+          <Drawer.Screen name="Scores" component={Scores} />
         </Drawer.Navigator>
       </NavigationContainer>
     </AppContext.Provider>

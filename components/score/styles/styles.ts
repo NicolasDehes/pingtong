@@ -2,9 +2,7 @@ import {StyleSheet} from 'react-native';
 
 export default StyleSheet.create({
     container: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
+        display: 'flex',
     },
     title: {
         fontSize: 18,
@@ -28,16 +26,20 @@ export default StyleSheet.create({
         flexDirection: 'row',
     },
     row: {
-        height: 30,
+        flex: 1,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
     },
-    rowText: {
-        textAlign: 'center',
-        fontSize: 14,
+    rowElement: {
+        flex: 1
     },
     winner: {
         color: '#0F0',
+        flex: 1
     },
     loser: {
         color: '#F00',
+        flex: 1
     }
 });
