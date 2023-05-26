@@ -9,8 +9,6 @@ import { styles } from "./App.style";
 import { AppContext, AppContextElement} from "./components/Global/AppProvider";
 import { useState } from "react";
 
-
-const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 
 function LogInScreen({ navigation }) {
