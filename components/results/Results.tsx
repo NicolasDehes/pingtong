@@ -1,9 +1,9 @@
 
-import { Avatar, Badge, Button, Chip, Icon, ListItem } from "@rneui/themed"
+import { Avatar, Chip, Icon, ListItem } from "@rneui/themed"
 import { LinearGradient } from "expo-linear-gradient"
-import { Text, View } from "react-native"
+import { View } from "react-native"
 
-const Results = () => {
+const Results = (navigation: any) => {
 
     const gamesList = [
         {
