@@ -1,11 +1,11 @@
 import { createContext } from "react";
 
-export type AppContextElement = {
+export interface AppContextElement {
     username : string,
     userEmail: string,
     theme    : ThemeContextType
-} | null;
+};
 
 export type ThemeContextType = "light" | "dark";
 
-export const AppContext = createContext<AppContextElement>(null);
+export const AppContext = createContext<AppContextElement | null>(null);

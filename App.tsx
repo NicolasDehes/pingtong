@@ -14,6 +14,7 @@ import SignUp from "./components/Form/SignUp/SignUp";
 
 import { AppContext, AppContextElement} from "./components/Global/AppProvider";
 import { useState } from "react";
+import Questionnaire from "./components/Form/Questionnaire/Questionnaire";
 
 
 const Stack = createStackNavigator();
@@ -46,6 +47,12 @@ function DrawerContent({ navigation }) {
       >
         <Text>S'inscrire</Text>
       </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.drawerItem}
+        onPress={() => navigation.navigate("Questionnaire")}
+      >
+        <Text>Questionnaire</Text>
+      </TouchableOpacity>
     </View>
   );
 }
@@ -62,6 +69,7 @@ export default function App() {
         <Drawer.Navigator drawerContent={(props) => <DrawerContent {...props} />}>
           <Drawer.Screen name="Se connecter" component={LogInScreen} />
           <Drawer.Screen name="S'inscrire" component={SignUpScreen} />
+          <Drawer.Screen name="Questionnaire" component={Questionnaire} />
         </Drawer.Navigator>
       </NavigationContainer>
     </AppContext.Provider>
