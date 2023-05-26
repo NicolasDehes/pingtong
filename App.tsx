@@ -1,19 +1,14 @@
-import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
-import NunitoSemiBold from "./assets/Nunito-SemiBold.ttf";
-import { useFonts } from "expo-font";
 import { NavigationContainer } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
-import { createDrawerNavigator } from "@react-navigation/drawer";
-import { styles } from "./App.styles";
+import { DrawerContentScrollView, DrawerItemList, createDrawerNavigator } from "@react-navigation/drawer";
 import 'react-native-gesture-handler';
-
-import { Button } from "@rneui/themed"
 
 import LogIn from "./components/Form/LogIn/LogIn";
 import SignUp from "./components/Form/SignUp/SignUp";
+import { styles } from "./App.style";
 
-const Stack = createStackNavigator();
+import { AppContext, AppContextElement} from "./components/Global/AppProvider";
+import { useState } from "react";
+
 const Drawer = createDrawerNavigator();
 
 function LogInScreen({ navigation }) {
@@ -28,32 +23,31 @@ function SignUpScreen({ navigation }) {
   );
 }
 
-function DrawerContent({ navigation }) {
+function CustomDrawerContent(props) {
   return (
-    <View style={styles.drawerContent}>
-      <TouchableOpacity
-        style={styles.drawerItem}
-        onPress={() => navigation.navigate("Se connecter")}
-      >
-        <Text>Se connecter</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.drawerItem}
-        onPress={() => navigation.navigate("S'inscrire")}
-      >
-        <Text>S'inscrire</Text>
-      </TouchableOpacity>
-    </View>
+    <DrawerContentScrollView style={styles.drawerContent} {...props}>
+      <DrawerItemList styles={{color: 'red'}} {...props} />
+    </DrawerContentScrollView>
   );
 }
 
 export default function App() {
+  const [context, setContext] = useState<AppContextElement>({
+    username : "Toto",
+    userEmail: "Totoo@ping.com",
+    theme    : 'light'
+  });
   return (
-    <NavigationContainer>
-      <Drawer.Navigator drawerContent={(props) => <DrawerContent {...props} />}>
-        <Drawer.Screen name="Se connecter" component={LogInScreen} />
-        <Drawer.Screen name="S'inscrire" component={SignUpScreen} />
-      </Drawer.Navigator>
-    </NavigationContainer>
+    <AppContext.Provider value={context}>
+      <NavigationContainer>
+        <Drawer.Navigator screenOptions={{
+          drawerItemStyle: styles.drawerItem,
+          drawerLabelStyle: styles.drawerLabel,
+        }} drawerContent={(props) => <CustomDrawerContent {...props} />}>
+          <Drawer.Screen name="Se connecter" component={LogInScreen} />
+          <Drawer.Screen name="S'inscrire" component={SignUpScreen} />
+        </Drawer.Navigator>
+      </NavigationContainer>
+    </AppContext.Provider>
   );
 }
