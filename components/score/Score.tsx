@@ -33,7 +33,7 @@ export default class Score extends Component<Props, State> {
   render() {
     return (
       <ScrollView style={styles.container}>
-        <Text style={styles.title}>Scores:</Text>
+        <Text style={styles.title}>Scores</Text>
         <Table borderStyle={styles.tableBorder}>
           <TableWrapper style={styles.wrapper}>
           {
@@ -51,3 +51,4 @@ export default class Score extends Component<Props, State> {
     )
   }
 }
+
