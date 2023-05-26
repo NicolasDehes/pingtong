@@ -6,6 +6,11 @@ import LogIn from "./components/Form/LogIn/LogIn";
 import SignUp from "./components/Form/SignUp/SignUp";
 import { styles } from "./App.style";
 
+import { AppContext, AppContextElement} from "./components/Global/AppProvider";
+import { useState } from "react";
+
+
+const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 
 function LogInScreen({ navigation }) {
@@ -29,15 +34,19 @@ function CustomDrawerContent(props) {
 }
 
 export default function App() {
+  const [context, setContext] = useState<AppContextElement>({
+    username : "Toto",
+    userEmail: "Totoo@ping.com",
+    theme    : 'light'
+  });
   return (
-    <NavigationContainer>
-      <Drawer.Navigator screenOptions={{
-        drawerItemStyle: styles.drawerItem,
-        drawerLabelStyle: styles.drawerLabel,
-      }} drawerContent={(props) => <CustomDrawerContent {...props} />}>
-        <Drawer.Screen name="Se connecter" component={LogInScreen} />
-        <Drawer.Screen name="S'inscrire" component={SignUpScreen} />
-      </Drawer.Navigator>
-    </NavigationContainer>
+    <AppContext.Provider value={context}>
+      <NavigationContainer>
+        <Drawer.Navigator drawerContent={(props) => <DrawerContent {...props} />}>
+          <Drawer.Screen name="Se connecter" component={LogInScreen} />
+          <Drawer.Screen name="S'inscrire" component={SignUpScreen} />
+        </Drawer.Navigator>
+      </NavigationContainer>
+    </AppContext.Provider>
   );
 }
